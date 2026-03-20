@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+
+    <div class="video-background">
+    <video autoplay muted loop playsinline id="bgVideo"></video>
+</div>
+
+    <main class="main-container">
+        <div class="search-box">
+            <input type="text" id="searchInput" list="city-suggestions" placeholder="Введіть місто...">
+            <datalist id="city-suggestions"></datalist>
+            <button class="search-btn" onclick="handleSearch()">
+                <span class="material-symbols-outlined">search</span>
+            </button>
+        </div>
+
+        <div class="weather-main">
+            <div class="weather-info">
+                <h2 id="city">Київ</h2>
+                <p id="date">Сьогодні</p>
+            </div>
+            <img src="assets/weather/clear.svg" id="weatherIcon" class="main-icon">
+        </div>
+
+        <div class="temperature" id="temp">--°</div>
+
+        <div class="details">
+            <div class="col">
+                <span class="material-symbols-outlined">humidity_percentage</span>
+                <div>
+                    <p><span id="humidity">--</span>%</p>
+                    <p class="label">Вологість</p>
+                </div>
+            </div>
+            <div class="col">
+                <span class="material-symbols-outlined">air</span>
+                <div>
+                    <p><span id="wind">--</span> м/с</p>
+                    <p class="label">Вітер</p>
+                </div>
+            </div>
+            <div class="col">
+                <span class="material-symbols-outlined">device_thermostat</span>
+                <div>
+                    <p><span id="feels">--</span>°</p>
+                    <p class="label">Відчувається</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="forecast" id="forecast"></div>
+        <div id="map"></div>
+        <div class="history" id="history"></div>
+    </main>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
