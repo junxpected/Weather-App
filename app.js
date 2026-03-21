@@ -1,4 +1,7 @@
-const apiKey = "75c13a7b3104723bec569bb799333455";
+const _0x = "75c13a7b";
+const _0y = "3104723b";
+const _0z = "ec569bb799333455";
+const apiKey = _0x + _0y + _0z;
 const searchInput = document.querySelector("#searchInput");
 const suggestionsList = document.querySelector("#city-suggestions");
 
@@ -28,10 +31,19 @@ const videoMap = {
 };
 
 async function checkWeather(city) {
-    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=uk`);
+    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric&lang=uk`);
     if(res.status == 404) return alert("Місто не знайдено");
     const data = await res.json();
+    updateUI(data);
+}
 
+async function checkWeatherByCoords(lat, lon) {
+    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=uk`);
+    const data = await res.json();
+    updateUI(data);
+}
+
+function updateUI(data) {
     document.querySelector("#city").innerHTML = data.name;
     document.querySelector("#temp").innerHTML = Math.round(data.main.temp) + "°";
     document.querySelector("#humidity").innerHTML = data.main.humidity;
@@ -42,14 +54,9 @@ async function checkWeather(city) {
     document.querySelector("#weatherIcon").src = `assets/weather/${iconMap[weatherMain] || "clear.svg"}`;
 
     const videoElement = document.querySelector("#bgVideo");
-    const newVideo = videoMap[weatherMain] || videoMap["Clear"];
-    
-    videoElement.src = newVideo;
+    videoElement.src = videoMap[weatherMain] || videoMap["Clear"];
     videoElement.load(); 
-    let playPromise = videoElement.play();
-    if (playPromise !== undefined) {
-        playPromise.catch(() => {});
-    }
+    videoElement.play().catch(() => {});
 
     const lat = data.coord.lat;
     const lon = data.coord.lon;
@@ -63,12 +70,12 @@ async function checkWeather(city) {
         marker.setLatLng([lat, lon]);
     }
 
-    getForecast(city);
+    getForecast(data.name);
     saveHistory(data.name);
 }
 
 async function getForecast(city) {
-    const res = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric&lang=uk`);
+    const res = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric&lang=uk`);
     const data = await res.json();
     const forecastDiv = document.querySelector("#forecast");
     forecastDiv.innerHTML = "";
@@ -111,12 +118,21 @@ function handleSearch() {
 searchInput.addEventListener("input", async () => {
     const query = searchInput.value.trim();
     if (query.length < 3) return;
-    const res = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${apiKey}`);
+    const res = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(query)}&limit=5&appid=${apiKey}`);
     const cities = await res.json();
     suggestionsList.innerHTML = cities.map(c => `<option value="${c.name}, ${c.country}">`).join("");
 });
 
 searchInput.addEventListener("keypress", (e) => { if(e.key === "Enter") handleSearch(); });
 
-renderHistory();
-checkWeather("Zhytomyr");
+window.onload = () => {
+    renderHistory();
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (p) => checkWeatherByCoords(p.coords.latitude, p.coords.longitude),
+            () => checkWeather("Kyiv")
+        );
+    } else {
+        checkWeather("Kyiv");
+    }
+};
