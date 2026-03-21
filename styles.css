@@ -38,9 +38,11 @@ body {
 /* ГОЛОВНИЙ КОНТЕЙНЕР */
 .main-container {
     position: relative;
+    position: relative;
     z-index: 1;
-    width: 380px;
-    padding: 30px;
+    width: 90%;
+    max-width: 400px; 
+    padding: 20px;
     border-radius: 30px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
@@ -172,4 +174,39 @@ body {
     margin-top: 20px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     z-index: 1; 
+}
+
+@media (max-width: 450px) {
+    .main-container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .temperature {
+        font-size: 70px; /* Зменшуємо цифри температури */
+    }
+
+    .main-icon {
+        width: 60px; /* Менша іконка */
+        height: 60px;
+    }
+
+    .details {
+        flex-wrap: wrap; /* Дозволяємо іконкам вологості/вітру ставати в два ряди, якщо тісно */
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .col {
+        min-width: 100px;
+    }
+
+    #map {
+        height: 150px; /* Трохи нижча карта для екрана телефону */
+    }
+    
+    .forecast {
+        overflow-x: auto; 
+        padding-bottom: 10px;
+    }
 }
