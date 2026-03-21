@@ -84,7 +84,7 @@ async function getForecast(city) {
         const day = data.list[i];
         const date = new Date(day.dt * 1000).toLocaleDateString('uk-UA', {weekday: 'short'});
         forecastDiv.innerHTML += `
-            <div style="display:flex; flex-direction:column; align-items:center; font-size:14px;">
+            <div style="display:flex; flex-direction:column; align-items:center; font-size:14px; color:white;">
                 <span>${date}</span>
                 <img src="assets/weather/${iconMap[day.weather[0].main] || 'clear.svg'}" width="30">
                 <span>${Math.round(day.main.temp)}°</span>
@@ -104,9 +104,12 @@ function saveHistory(city) {
 
 function renderHistory() {
     const history = JSON.parse(localStorage.getItem("weatherHistory")) || [];
-    document.querySelector("#history").innerHTML = history.map(city => 
-        `<button class="history-btn" onclick="checkWeather('${city}')">${city}</button>`
-    ).join("");
+    const historyDiv = document.querySelector("#history");
+    if (historyDiv) {
+        historyDiv.innerHTML = history.map(city => 
+            `<button class="history-btn" onclick="checkWeather('${city}')">${city}</button>`
+        ).join("");
+    }
 }
 
 function handleSearch() {
