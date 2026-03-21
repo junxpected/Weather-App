@@ -11,8 +11,8 @@
 body {
     margin: 0;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: center; /* Центрування по вертикалі */
+    justify-content: center; /* Центрування по горизонталі */
     min-height: 100vh;
     overflow: hidden;
     background-color: #2c3e50;
@@ -38,17 +38,17 @@ body {
 /* ГОЛОВНИЙ КОНТЕЙНЕР */
 .main-container {
     position: relative;
-    position: relative;
     z-index: 1;
-    width: 90%;
-    max-width: 400px; 
-    padding: 20px;
+    width: 92%; /* Робимо ширшим, щоб займав майже весь екран телефона */
+    max-width: 400px; /* Але на комп'ютері залишаємо акуратним */
+    padding: 30px 20px; /* Більше відступів зверху/знизу */
     border-radius: 30px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     text-align: center;
+    margin: 0 auto; /* Додаткове гарантоване центрування */
 }
 
 /* ПОШУК */
