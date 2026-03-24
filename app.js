@@ -139,3 +139,8 @@ window.onload = () => {
         checkWeather("Kyiv");
     }
 };
+
+
+if (typeof module !== 'undefined') {
+    module.exports = { iconMap, videoMap };
+}

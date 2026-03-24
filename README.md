@@ -24,6 +24,9 @@
 
 [Відкрити сайт у браузері](https://junxpected.github.io/Weather-App/)
 
+
+![Tests Status](https://github.com/junxpected/Weather-App/actions/workflows/tests.yml/badge.svg)
+
 ---
 
 ### Як це зроблено
